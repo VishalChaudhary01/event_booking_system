@@ -14,6 +14,6 @@ bookingRoutes.post(
   createBooking,
 );
 
-bookingRoutes.get("/user/:id/bookings", getUserBookings);
+bookingRoutes.get("/users/:id/bookings", getUserBookings);
 
 export default bookingRoutes;

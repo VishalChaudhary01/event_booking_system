@@ -36,8 +36,8 @@ export const createBooking: RequestHandler = async (req, res) => {
     const lockedEvent = await tx.$queryRaw<
       { id: string; remainingTickets: number }[]
     >`
-      SELECT id, remaining_tickets as "remainingTickets"
-      FROM events
+      SELECT id, remainingTickets
+      FROM Event
       WHERE id = ${eventId}
       FOR UPDATE
     `;
@@ -47,8 +47,8 @@ export const createBooking: RequestHandler = async (req, res) => {
     }
 
     await tx.$executeRaw`
-      UPDATE events
-      SET remaining_tickets = remaining_tickets - 1
+      UPDATE Event
+      SET remainingTickets = remainingTickets - 1
       WHERE id = ${eventId}`;
 
     const newBooking = await tx.booking.create({
