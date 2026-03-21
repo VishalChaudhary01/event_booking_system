@@ -1,0 +1,52 @@
+version: "3.8"
+services:
+  mysql_db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_DATABASE=event_booking
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    ports:
+      - 3306:3306
+    networks:
+      - prisma-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "user",
+          "--password=1234",
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+    env_file:
+      - .env
+    networks:
+      - prisma-network
+
+networks:
+  prisma-network:
+    name: prisma-network
+
+volumes:
+  mysql_data:
