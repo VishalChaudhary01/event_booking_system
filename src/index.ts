@@ -4,10 +4,13 @@ import { Env } from "./config/env";
 import { errorHandler } from "./middlewares/errorHandler";
 import { AppError } from "./utils/appError";
 import { HttpStatus } from "./config/httpStatus";
+import { swaggerUi, swaggerDocument } from "@/config/swagger";
 import appRoutes from "./routes";
 
 const app = express();
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/health", (req, res) => {
   res.status(200).json({ message: "Healthy server!" });
