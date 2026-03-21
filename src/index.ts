@@ -13,7 +13,7 @@ app.get("/health", (req, res) => {
   res.status(200).json({ message: "Healthy server!" });
 });
 
-app.use("/api/v1", appRoutes);
+app.use("/", appRoutes);
 
 app.use((req, res, next) => {
   next(new AppError(`API route ${req.path} not found`, HttpStatus.NOT_FOUND));
