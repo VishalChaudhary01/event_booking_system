@@ -85,7 +85,7 @@ export const createBooking: RequestHandler = async (req, res) => {
 
   res
     .status(HttpStatus.CREATED)
-    .json({ message: "Booking created successfully", booking });
+    .json({ message: "Booking created successfully", data: booking });
 };
 
 export const getUserBookings: RequestHandler = async (req, res) => {
@@ -127,5 +127,5 @@ export const getUserBookings: RequestHandler = async (req, res) => {
 
   res
     .status(HttpStatus.OK)
-    .json({ message: "Bookings fetched successfully", bookings });
+    .json({ message: "Bookings fetched successfully", data: bookings });
 };

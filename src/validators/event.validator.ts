@@ -27,4 +27,12 @@ export const createEventSchema = z.object({
     .max(100000, "Total capacity must be at most 100,000"),
 });
 
+export const createAttendanceSchema = z.object({
+  bookingCode: z
+    .string("Booking code is required")
+    .uuid("Invalid booking code format")
+    .trim(),
+});
+
 export type CreateEventInput = z.infer<typeof createEventSchema>;
+export type CreateAttendanceInput = z.infer<typeof createAttendanceSchema>;
